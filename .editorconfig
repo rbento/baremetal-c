@@ -1,0 +1,31 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Assembly (NASM / DASM)
+[*.{asm,dasm,s,inc}]
+indent_style = tab
+indent_size = 8
+tab_width = 8
+
+# C / C++ - Let clang-format handle ColumnLimit without Vim hard-wrapping
+[*.{c,cpp,cc,cxx,h,hpp}]
+max_line_length = off
+
+# Java
+[*.java]
+indent_style = space
+indent_size = 4
+
+# Build systems & docs
+[Makefile]
+indent_style = tab
+
+[*.md]
+trim_trailing_whitespace = false

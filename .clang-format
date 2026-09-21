@@ -1,0 +1,9 @@
+AllowShortFunctionsOnASingleLine: None
+BasedOnStyle: LLVM
+BreakBeforeBraces: Allman
+ColumnLimit: 120
+IndentWidth: 4
+InsertNewlineAtEOF: true
+SeparateDefinitionBlocks: Always
+TabWidth: 4
+UseTab: Never
