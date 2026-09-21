@@ -1,0 +1,55 @@
+# Prerequisites & Build Output
+/build/
+/bin/
+/dist/
+/target/
+
+# Object & Dependency Files
+*.o
+*.obj
+*.d
+
+# Static & Dynamic Libraries
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Binaries / Target Executables
+*.elf
+*.bin
+*.out
+*.hex
+
+# Clangd & Tooling
+.cache/
+.clangd/
+compile_commands.json
+.clang-format.bak
+
+# Debugger & Diagnostics
+.gdb_history
+gdb.txt
+core
+core.*
+vgcore.*
+
+# Vim Artifacts (handles hidden swap, backup, and undo files)
+.*.sw[a-p]
+.*.swo
+.*.swp
+*.sw[a-p]
+*.swo
+*.swp
+.*.un~
+*~
+.*~
+#*#
+
+# Ctags / Symbol Indices
+tags
+tags.lock
+tags.temp
+TAGS
