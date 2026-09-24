@@ -5,7 +5,7 @@
 
 A minimal starter template for bare-metal C programming, custom game engines, graphics pipelines, and deliberate practice.
 
-## 1. Introduction and Goals
+## Introduction and Goals
 
 `baremetal-c` is a minimal template for deliberate practice while programming bare-metal C without frameworks or runtime dependencies.
 
@@ -21,7 +21,7 @@ cd my-project
 make run
 ```
 
-## 2. Architecture Constraints
+## Architecture Constraints
 *   **Target OS:** Linux.
 *   **Language Standard:** ISO C11.
 *   **Compiler:** `clang` (default) or `gcc`.
@@ -29,16 +29,16 @@ make run
 *   **Debugger:** `gdb`.
 *   **Tooling:** `bear` (compilation database), `ctags` (source indexing), `clangd` (LSP).
 
-## 3. System Scope and Context
+## System Scope and Context
 *   **Context:** The template serves as a generic starting point for bare-metal C projects—ranging from custom game engines and hardware renderers to systems utilities and deliberate programming katas.
 *   **Technical Scope:** The pipeline consumes raw `.c` source files and `.h` headers, processes them through a direct POSIX `make` workflow, produces native ELF executables in `build/bin/`, and exports editor metadata (`compile_commands.json`, `tags`).
 
-## 4. Solution Strategy
+## Solution Strategy
 *   **Out-of-Source Compilation:** Object files (`.o`), dependency files (`.d`), and executables route exclusively to a transient `build/` tree to keep the repository root clean.
 *   **Header Dependency Tracking:** Compiler flags (`-MMD -MP`) generate Make prerequisites during compilation, ensuring proper recompilation when included headers change.
 *   **Automated Tooling Sync:** `bootstrap.sh` automates the generation of `compile_commands.json` and tag indexes so editor LSP diagnostics and navigation match the current build state.
 
-## 5. Building Block View
+## Building Block View
 ### Level 1: Directory Structure
 *   `.clang-format`: Formatting rules applied across the repository.
 *   `.editorconfig`: Fallback editor indentation, charset, and line-ending rules.
@@ -51,37 +51,35 @@ make run
 *   `include/`: Public headers (`.h`).
 *   `Makefile`: Build rules, dependency includes, and compiler targets.
 
-## 6. Runtime View
-### 6.1 Standard Build Sequence
+## Runtime View
+### Standard Build Sequence
 1.  `make` is executed.
 2.  The compiler compiles modified `.c` files in `src/` into `.o` objects in `build/obj/`.
 3.  The compiler writes header dependency `.d` files alongside object files in `build/obj/`.
 4.  The linker combines all `.o` objects into the final binary inside `build/bin/`.
 
-### 6.2 Environment Bootstrap Sequence (`bootstrap.sh`)
+### Environment Bootstrap Sequence (`bootstrap.sh`)
 1.  Invokes `make clean` to purge existing build artifacts.
 2.  Removes stale caches and editor indexes (`.cache`, `.clangd`, `tags`, `compile_commands.json`).
 3.  Executes `bear -- make debug` to run a debug build (`-g -O0 -DDEBUG`) while capturing compiler invocations into `compile_commands.json`.
 4.  Runs `ctags -R .` to index function signatures and identifiers for tag-based navigation.
 5.  Prints the output paths of all generated artifacts.
 
-## 8. Cross-cutting Concepts
+## Cross-cutting Concepts
 *   **Editor Integration:** Standard CLI tools (`bear`, `ctags`) are preferred over IDE-specific extensions. Any editor implementing LSP (`clangd`) or tags gets jump-to-definition, code completion, and diagnostics out of the box.
 *   **Code Style Enforcement:** `.clang-format` handles syntax layout deterministically to prevent diff noise. `.editorconfig` provides basic whitespace settings for environments without an active LSP.
 *   **Debugging Instrumentation:** The `make debug` target applies `-g -O0 -DDEBUG` so `gdb` retains full DWARF symbol tables and avoids instruction reordering during stepping.
 
-## 9. Architecture Decisions
+## Architecture Decisions
 *   **ADR-01: Artifact Segregation:** Source directories must contain zero generated files. *Rationale:* Prevents clutter, simplifies `.gitignore`, and eliminates accidental binary check-ins.
 *   **ADR-02: POSIX Make over CMake:** Direct Makefiles are chosen over CMake or Meson. *Rationale:* Eliminates meta-build dependencies, keeps the build process transparent, and avoids unnecessary abstractions for C projects.
 *   **ADR-03: Bear for LSP Support:** `bear` is used to intercept `make` rather than migrating the project to CMake solely for `CMAKE_EXPORT_COMPILE_COMMANDS`. *Rationale:* Retains the simplicity of a raw Makefile while maintaining full `clangd` language server support.
 
-## 12. Glossary
+## Glossary
 *   **Bear:** A build-interception tool that generates a JSON compilation database (`compile_commands.json`) for Clang tooling.
 *   **Compilation Database:** A structured JSON file recording exact compiler flags, working directories, and files used during a build.
 *   **Ctags:** A tool that indexes language objects (functions, macros, structs) into a `tags` file for text-editor jump navigation.
 *   **LSP:** Language Server Protocol. A standardized protocol between development tools and language analyzers (e.g., `clangd`).
-
----
 
 ## References
 *   [arc42](https://arc42.org) - Architecture communication template.
